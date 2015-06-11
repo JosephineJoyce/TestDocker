@@ -32,5 +32,4 @@ usage()
    echo
    exit 1
 }
-
-ls -la
+echo "I am here in prepare server dbs"
