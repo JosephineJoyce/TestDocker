@@ -1,0 +1,36 @@
+<server description="new server">
+
+<!-- Enable features -->
+<featureManager>
+<feature>jsp-2.2</feature>
+<feature>jaxrs-1.1</feature>
+<feature>localConnector-1.0</feature>
+<feature>appSecurity-2.0</feature>
+<!-- <feature>usr:OAuthTai-1.0</feature> -->
+<feature>jpa-2.0</feature>
+</featureManager>
+
+<!--
+<usr_OAuthTAI id="myOAuthTAI1">
+<properties realmName="BasicRealm" securedURLs="/imfpush/v1/apps/*"/>
+</usr_OAuthTAI>
+-->
+
+<httpEndpoint host="*" httpPort="9080" httpsPort="9443" id="defaultHttpEndpoint"/>
+
+<!--<logging traceSpecification="*=info:com.ibm.pushworks.*=all:com.ibm.mbaas.*=all: com.ibm.imf.*=all: com.worklight.oauth.*=all"/>-->
+<logging traceSpecification="*=info:com.ibm.pushworks.*=all:com.ibm.mbaas.*=all: com.ibm.imf.*=all: com.worklight.oauth.*=all:com.ibm.worklight.*=all:com.worklight.integration.*=all"/>  
+
+<basicRegistry id="basic" realm="BasicRealm"/>
+
+<application id="pushworks-server" location="pushworks-server-Main-SNAPSHOT.war" name="pushworks-server" context-root="/">
+<application-bnd>
+<security-role name="PushUsers">
+<special-subject type="ALL_AUTHENTICATED_USERS" />
+</security-role>
+</application-bnd>
+</application>
+
+<applicationMonitor updateTrigger="mbean"/>
+	
+</server>

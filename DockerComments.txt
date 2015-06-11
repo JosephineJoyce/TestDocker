@@ -1,0 +1,74 @@
+
+ice --local pull registry-ice.ng.bluemix.net/ibmliberty
+ice --local tag registry-ice.ng.bluemix.net/ibmliberty ibmliberty 
+
+
+boot2docker start
+cf login -a https://api.ng.bluemix.net -u jojustin@in.ibm.com -p Thenali1
+ice login -H https://api-ice.ng.bluemix.net/v2/containers -R registry-ice.ng.bluemix.net
+docker build -t basepush:bluemix .
+ice --local tag basepush:bluemix registry-ice.ng.bluemix.net/jejtest/basepush:bluemix
+ice --local push registry-ice.ng.bluemix.net/jejtest/basepush:bluemix
+
+
+ice run --name basepush --publish 9080 registry-ice.ng.bluemix.net/jejtest/mypush:bluemix --volume pushlogs:/var/logs
+ice run --name newpush --publish 9080 registry-ice.ng.bluemix.net/jejtest/mypush:bluemix --volume testvol:/Users/jojustin/testvol
+
+
+
+
+For MFP :
+docker load -i imf-starter-image_7.1.0.tar.gz
+ice --local tag imf-starter-image_7.1.0_7.1.0:latest registry-ice.ng.bluemix.net/jejtest/ibmimfstarter1:bluemix
+ice --local push registry-ice.ng.bluemix.net/jejtest/ibmimfstarter1:bluemix
+
+
+ssh -ssh -vi ~/.ssh/id_rsa root@129.41.234.111
+
+
+boot2docker start
+cf login -a https://api.ng.bluemix.net -u jojustin@in.ibm.com -p Thenali1
+ice login -H https://api-ice.ng.bluemix.net/v2/containers -R registry-ice.ng.bluemix.net
+docker build -t registry-ice.ng.bluemix.net .
+ice --local push registry-ice.ng.bluemix.net/jejtest
+ice run --name mypush --bind mypushbindapp registry-ice.ng.bluemix.net/jejtest
+ice run --name jejtest1 --bind mypushbindapp registry-ice.ng.bluemix.net/jejtest/mypush --env securityEntryPoint=com.ibm.docker.test.SecurityFilter,analyticsImpl=com.ibm.pushworks.server.report.IMFPushLoggingEventsStore
+
+
+
+
+
+
+cf login -a https://api.ng.bluemix.net -u jojustin@in.ibm.com -p Thenali1
+ice login -k a71a7b136af1bc5e6d36a2b21942643ad8f41e6a7f691a1f -H https://api-ice.ng.bluemix.net/v1.0/containers -R registry-ice.ng.bluemix.net
+docker build -t registry-ice.ng.bluemix.net/jejtest/mypush-srvc .
+ice --local push registry-ice.ng.bluemix.net/jejtest/mypush-srvc
+ice run --name jejtest1 --bind mypushbindapp registry-ice.ng.bluemix.net/jejtest/mypush-srvc --env securityEntryPoint=com.ibm.docker.test.SecurityFilter,analyticsImpl=com.ibm.pushworks.server.report.IMFPushLoggingEventsStore
+
+
+boot2docker start
+cf login -a http://api.stage1.ng.bluemix.net -u jojustin@in.ibm.com -p Thenali1
+ice login -k b5e2d9fb8fc8c5a20cbbf8d47b41573f5a6c17edff4fe5a1 -H http://api-ice.stage1.ng.bluemix.net/v1.0/containers -R registry-ice.stage1.ng.bluemix.net 
+docker build -t registry-ice.stage1.ng.bluemix.net/jejtest/mypush-srvc .
+ice --local push registry-ice.ng.stage1.bluemix.net/jejtest/mypush-srvc
+ice run --name jejtest1 --bind mypushbindapp registry-ice.stage1.ng.bluemix.net/jejtest/mypush-srvc --env securityEntryPoint=com.ibm.docker.test.SecurityFilter,analyticsImpl=com.ibm.pushworks.server.report.IMFPushLoggingEventsStore
+
+
+
+registry-ice.ng.bluemix.net/jejtest
+
+
+
+
+docker build -t loggerpush1:bluemix .
+ice --local tag loggerpush1:bluemix registry-ice.ng.bluemix.net/jejtest/loggerpush1:bluemix
+ice --local push registry-ice.ng.bluemix.net/jejtest/loggerpush1:bluemix
+ice run --name pushWithServiceLog registry-ice.ng.bluemix.net/jejtest/loggerpush1:bluemix
+
+
+
+
+docker build -t servicepush:bluemix .
+ice --local tag servicepush:bluemix registry-ice.ng.bluemix.net/jejtest/servicepush:bluemix
+ice --local push registry-ice.ng.bluemix.net/jejtest/servicepush:bluemix
+
