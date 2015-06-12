@@ -3,6 +3,10 @@
 echo -e "${label_color}Starting build script${no_color}"
 
 echo "This is from the init docker build sh"
+pwd
+
+ls -la
+
 ./prepareserver.sh
 
 # The IBM Container Service CLI (ice), Git client (git), IDS Inventory CLI (ids-inv) and Python 2.7.3 (python) have been installed.
